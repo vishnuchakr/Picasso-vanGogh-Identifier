@@ -1,2 +1,5 @@
 #ignore all images used as data.
 *.jpg
+
+#ignore data folder
+data/
