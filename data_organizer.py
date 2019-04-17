@@ -16,7 +16,6 @@ def folder_organizer(is_training, input_folder, target_folder):
         for file in files:
             file_path = os.path.join(input_folder, file)
             if seventy_percent > 0:
-                print(file)
                 seventy_percent -= 1
                 shutil.move(file_path, target_folder)
             else:
