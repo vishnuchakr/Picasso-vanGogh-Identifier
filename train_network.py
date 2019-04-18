@@ -8,7 +8,7 @@ from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import img_to_array
 from keras.utils import to_categorical
-from image_classifier import LeNet
+from image_classifier import CNN
 from imutils import paths
 import matplotlib.pyplot as plt
 import numpy as np
@@ -75,7 +75,7 @@ aug = ImageDataGenerator(rotation_range=30, width_shift_range=0.1,
 
 #Initialize the model
 print("Compiling model...")
-model = LeNet.build(width=28, height=28, depth=3, classes=2)
+model = CNN.build(width=28, height=28, depth=3, classes=2)
 opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
 model.compile(loss="binary_crossentropy", optimizer=opt, 
 	metrics=["accuracy"])
