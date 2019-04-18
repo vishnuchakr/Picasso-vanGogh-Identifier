@@ -18,7 +18,7 @@ import cv2
 import os
 
 #Construct the argument parser and parse the arguments
-ap = argparse.ArgumentParse()
+ap = argparse.ArgumentParser()
 ap.add_argument("-d", "--dataset", required=True, 
 	help="path to input dataset")
 ap.add_argument("-m", "--model", required=True,
@@ -98,7 +98,7 @@ plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
 plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
 plt.plot(np.arange(0, N), H.history["acc"], label="train_acc")
 plt.plot(np.arange(0, N), H.history["val_acc"], label="val_acc")
-plt.title("Training Loss and Accuracy on Santa/Not Santa")
+plt.title("Training Loss and Accuracy on Picasso versus van Gogh")
 plt.xlabel("Epoch #")
 plt.ylabel("Loss/Accuracy")
 plt.legend(loc="lower left")
