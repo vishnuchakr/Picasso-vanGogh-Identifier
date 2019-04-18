@@ -24,7 +24,7 @@ class LeNet:
 		#Second set of CONV -> RELU -> POOL layers
 		model.add(Conv2D(50, (5, 5), padding="same"))
 		model.add(Activation("relu"))
-		model.add(MaxPooling2D(pool_size(2, 2), strides=(2, 2)))
+		model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
 
 		#Set of FC -> RELU layers
 		model.add(Flatten())

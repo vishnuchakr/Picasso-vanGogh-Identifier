@@ -8,7 +8,7 @@ from keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
 from keras.preprocessing.image import img_to_array
 from keras.utils import to_categorical
-from pyimagesearch.lenet import LeNet
+from image_classifier import LeNet
 from imutils import paths
 import matplotlib.pyplot as plt
 import numpy as np
