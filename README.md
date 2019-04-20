@@ -46,16 +46,18 @@ there are 3 (red, green, and blue). 1 would represent grayscale.
 4. Classes: The number of classes we want to recognize. In this case, there are two
 (Picasso or van Gogh).
 
+![Declaration](https://user-images.githubusercontent.com/42984263/56462516-f98dcd00-6389-11e9-8f78-4f58759dc6b5.PNG)
+
 On line 14, I construct the model using Sequential() from Keras, since I'm
 sequentially adding layers to the CNN.
 
 Line 15 initializes shape of the input using a channels last format,
 the default for Tensorflow.
 
-![Declaration](https://user-images.githubusercontent.com/42984263/56462516-f98dcd00-6389-11e9-8f78-4f58759dc6b5.PNG)
-
 On lines 17 - 26, I add a CONV => RELU => POOL layer two times I'll
 refer to these as C,R,P layers.
+
+![conv](https://user-images.githubusercontent.com/42984263/56462517-04e0f880-638a-11e9-8eba-c84bfba8ce2a.PNG)
 
 For the first C,R,P layer, the CONV layer will have 20 convolution filters. I then
 apply a ReLu function, followed by 2x2 max pooling in both the x and y directions
@@ -65,9 +67,9 @@ For the next C,R,P layer, the CONV layer has 50 convolution filers. It's
 common to see the number of CONV filters increase the deeper we go into
 the network.
 
-![conv](https://user-images.githubusercontent.com/42984263/56462517-04e0f880-638a-11e9-8eba-c84bfba8ce2a.PNG)
-
 Lines 28 - 38 make up the final block of code in this file.
+
+![finalblock](https://user-images.githubusercontent.com/42984263/56462521-14f8d800-638a-11e9-8a36-3553f20b68ec.PNG)
 
 On line 29, I take the output of the preceding MaxPooling2D layer and
 flatten it into a single vector. This allows me to apply my dense/fully-connected layers.
@@ -82,11 +84,11 @@ being outputted.
 Finally, Line 42 returns the fully constructed deep learning + Keras 
 image classifier to the calling function.
  
- ![finalblock](https://user-images.githubusercontent.com/42984263/56462521-14f8d800-638a-11e9-8a36-3553f20b68ec.PNG)
- 
 <h3>train_network.py</h3>
 This file will train the CNN to classify paintings as either created by
 Picasso or van Gogh.
+
+![imports](https://user-images.githubusercontent.com/42984263/56462612-d5cb8680-638b-11e9-92c6-52e1479c1963.PNG)
 
 On lines 1 - 18, I import the packages required for this file. These packages
 enable me to 
@@ -101,25 +103,27 @@ enable me to
 On line 3, I set the matplotlib backend to 'Agg' so that I can save the 
 plot to disk in the background.
 
-![imports](https://user-images.githubusercontent.com/42984263/56462612-d5cb8680-638b-11e9-92c6-52e1479c1963.PNG)
-
 From here, I define command line arguments to simplify compilation of the model.
+
+![argparse](https://user-images.githubusercontent.com/42984263/56462614-e0861b80-638b-11e9-81a8-6837bce3a372.PNG)
 
 Here I have two required command line arguments, --dataset  and --model , as well as an optional path to the accuracy/loss chart, --plot .
 
 The --dataset switch should point to the directory containing the images I'll be training our image classifier on, while the --model  switch controls where I'll save the serialized image classifier after it has been trained. If --plot  is left unspecified, it will default to plot.png  in this directory if unspecified.
 
-![argparse](https://user-images.githubusercontent.com/42984263/56462614-e0861b80-638b-11e9-81a8-6837bce3a372.PNG)
-
 Next I set some training variables, initialize lists, and gather paths to images.
 
 On Lines 31-33 I define the number of training epochs, initial learning rate, and batch size.
+
+![epoch_batch](https://user-images.githubusercontent.com/42984263/56462676-e8928b00-638c-11e9-84cf-520b234814fa.PNG)
 
 Then I initialize data and label lists (Lines 37 and 38). These lists will be responsible for storing the images loaded from disk along with their respective class labels.
 
 From there I grab the paths to our input images followed by shuffling them (Lines 41-43).
 
-![epoch_batch](https://user-images.githubusercontent.com/42984263/56462676-e8928b00-638c-11e9-84cf-520b234814fa.PNG)
+Now I'll pre-process the images.
+
+This loop loads and resizes each image to a fixed 28×28 pixels, and appends the image array to the data  list, followed by extracting the class label from the imagePath on .
 
 <h3>validate_network.py</h3>
 
