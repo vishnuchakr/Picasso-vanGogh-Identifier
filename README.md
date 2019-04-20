@@ -77,6 +77,25 @@ Finally, Line 42 returns the fully constructed deep learning + Keras
 image classifier to the calling function.
  
 <h3>train_network.py</h3>
+This file will train the CNN to classify paintings as either created by
+Picasso or van Gogh.
+
+On lines 1 - 18, I import the packages required for this file. These packages
+enable me to 
+1. Load the image dataset from disk.
+
+2. Pre-process the images.
+
+3. Instantiate the CNN.
+
+4. Train the model.
+
+On line 3, I set the matplotlib backend to 'Agg' so that I can save the 
+plot to disk in the background.
+
+From here, I define command line arguments to simplify compilation of the model.
+
+
 
 <h3>validate_network.py</h3>
 
