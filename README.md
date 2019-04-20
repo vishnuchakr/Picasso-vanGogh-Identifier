@@ -52,6 +52,8 @@ sequentially adding layers to the CNN.
 Line 15 initializes shape of the input using a channels last format,
 the default for Tensorflow.
 
+![image_classifier_declaration](https://user-images.githubusercontent.com/42984263/56462482-56d54e80-6389-11e9-9c93-1b404af62c26.PNG)
+
 On lines 17 - 26, I add a CONV => RELU => POOL layer two times I'll
 refer to these as C,R,P layers.
 
