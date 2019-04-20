@@ -170,7 +170,7 @@ From this plot, I can spot a few issues that might be present with the model. I'
 
 <h3>validate_network.py</h3>
 
-The next step is to evaluate the model on example images not part of the training/testing splits.
+The next step is to evaluate the model on example images not part of the training/testing splits. I took an image off of Google Images for this purpose. I'll be using Picasso's "The Weeping Woman" for the example.
 
 ![newimports](https://user-images.githubusercontent.com/42984263/56463125-cf410d00-6393-11e9-9819-91c05dc9ca30.PNG)
 
@@ -186,7 +186,9 @@ Then I can load in an image and pre-process it:
 
 ![loadimage](https://user-images.githubusercontent.com/42984263/56463157-14653f00-6394-11e9-907a-ce8cd7ea6868.PNG)
 
-The image is loaded and a copy is made on Lines 18 and 19. The copy allows us to later recall the original image and put our label on it. Lines 22-25 handles scaling the image to the range [0, 1], converting it to an array, and addding an extra dimension. Adding an extra dimension to the array via np.expand_dims  allows the image to have the shape (1, width, height, 3). Forgetting to do so results in an error when calling model.predict later.
+The image is loaded and a copy is made on Lines 18 and 19. The copy allows us to later recall the original image and put our label on it. 
+
+Lines 22-25 handles scaling the image to the range [0, 1], converting it to an array, and addding an extra dimension. Adding an extra dimension to the array via np.expand_dims  allows the image to have the shape (1, width, height, 3). Forgetting to do so results in an error when calling model.predict later.
 
 From there we’ll load the classifier model and make a prediction:
 
@@ -196,4 +198,18 @@ Finally, I can use the prediction to draw on the original image copy and display
 
 ![display](https://user-images.githubusercontent.com/42984263/56463207-e8968900-6394-11e9-8b25-7d5fc1d5f1dc.PNG)
 
-The label is built on line 35 and the corresponding probability value is chosen on line 36. On line 37, the text label to be shown to the user on the image is produced. I resize the images to a standard width to ensure it will fit on the screen, and then put the label text on the image (Lines 40-42). Finally, on Lines 45, we display the output image until a key has been pressed (Line 46).
+The label is built on line 35 and the corresponding probability value is chosen on line 36. 
+
+On line 37, the text label to be shown to the user on the image is produced. 
+
+I resize the images to a standard width to ensure it will fit on the screen, and then put the label text on the image (Lines 40-42). 
+
+Finally, on Lines 45, we display the output image until a key has been pressed (Line 46).
+
+Now I can call this file from the terminal and see it in action:
+
+![terminal](https://user-images.githubusercontent.com/42984263/56463293-cb62ba00-6396-11e9-8b04-d8cc982ba449.PNG)
+
+Sure enough, the model is pretty confident that "The Weeping Woman" was created by Picasso!
+
+![output](https://user-images.githubusercontent.com/42984263/56463298-e5040180-6396-11e9-8583-282e9bab5cc0.PNG)
