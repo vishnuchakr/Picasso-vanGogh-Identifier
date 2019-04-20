@@ -162,6 +162,12 @@ I can run the training file in command line with this command:
 
 ![compile](https://user-images.githubusercontent.com/42984263/56463007-ff87ac00-6391-11e9-8eb5-2ff2a9c329e7.PNG)
 
+After training, this is what the Loss and Accuracy plot looks like:
+
+![loss](https://user-images.githubusercontent.com/42984263/56463045-b552fa80-6392-11e9-8f01-ba994867f26b.PNG)
+
+From this plot, I can spot a few issues that might be present with the model. I'll address them when I go to optimize my hyperparameters.
+
 <h3>validate_network.py</h3>
 
 
