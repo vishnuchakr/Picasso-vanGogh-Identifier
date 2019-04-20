@@ -213,3 +213,16 @@ Now I can call this file from the terminal and see it in action:
 Sure enough, the model is pretty confident that "The Weeping Woman" was created by Picasso!
 
 ![output](https://user-images.githubusercontent.com/42984263/56463298-e5040180-6396-11e9-8583-282e9bab5cc0.PNG)
+
+<h3>Optimize a Hyperparameter</h3>
+
+This project uses a number of hyperparameters, any of which I could choose to work with. First, I'll analzye the loss function that the model generated earlier.
+
+![lossspikes](https://user-images.githubusercontent.com/42984263/56463352-01ed0480-6398-11e9-837c-a38943be47fc.PNG)
+
+Taking a look at the validation loss plot, I see a number of unusually large spikes. After researching this, I found that this could either be the result of two causes:
+1.  Due to my use of the Adam optimizer from Keras in the training file, there is a chance that the "mini-batches" consist of unlucky data for optimization, inducing these spikes in the cost function. This is a problem with the **batch size** hyperparameter being too small.
+
+2. Spikes in validation loss can also be because of higher learning rates that are updating the model a bit too much after every pass. This is a problem with the **learning rate** hyperparameter being too large.
+
+I'll choose to experiment with the batch size for this project, although I just as easily could have adressed another hyperparameter.
