@@ -170,5 +170,30 @@ From this plot, I can spot a few issues that might be present with the model. I'
 
 <h3>validate_network.py</h3>
 
+The next step is to evaluate the model on example images not part of the training/testing splits.
 
+![newimports](https://user-images.githubusercontent.com/42984263/56463125-cf410d00-6393-11e9-9819-91c05dc9ca30.PNG)
 
+On lines 2-7 I import the required packages. I can use Keras to load my trained model that's saved to disk.
+
+Next, I parse command line arguments:
+
+![argparser](https://user-images.githubusercontent.com/42984263/56463138-eaac1800-6393-11e9-9316-f5c4cc045cbb.PNG)
+
+The model requires the model and the image to be evaluated as parameters.
+
+Then I can load in an image and pre-process it:
+
+![loadimage](https://user-images.githubusercontent.com/42984263/56463157-14653f00-6394-11e9-907a-ce8cd7ea6868.PNG)
+
+The image is loaded and a copy is made on Lines 18 and 19. The copy allows us to later recall the original image and put our label on it. Lines 22-25 handles scaling the image to the range [0, 1], converting it to an array, and addding an extra dimension. Adding an extra dimension to the array via np.expand_dims  allows the image to have the shape (1, width, height, 3). Forgetting to do so results in an error when calling model.predict later.
+
+From there we’ll load the classifier model and make a prediction:
+
+![predict](https://user-images.githubusercontent.com/42984263/56463204-aff6af80-6394-11e9-8b26-3246baeea19a.PNG)
+
+Finally, I can use the prediction to draw on the original image copy and display it to the screen:
+
+![display](https://user-images.githubusercontent.com/42984263/56463207-e8968900-6394-11e9-8b25-7d5fc1d5f1dc.PNG)
+
+The label is built on line 35 and the corresponding probability value is chosen on line 36. On line 37, the text label to be shown to the user on the image is produced. I resize the images to a standard width to ensure it will fit on the screen, and then put the label text on the image (Lines 40-42). Finally, on Lines 45, we display the output image until a key has been pressed (Line 46).
