@@ -1,7 +1,7 @@
 <h1>Picasso versus Vincent van Gogh CNN</h1>
 A CNN to classify a painting as created by either Picasso or Vincent van Gogh.
 
-Made with the Keras API using Tensorflow backed.
+Made with the Keras API using Tensorflow backend.
 <h3>image_classifier.py</h3>
 This file will define my network architecture for the model. I'll 
 implement a LeNet Convolutional Neural Network, modeled by:
@@ -44,6 +44,38 @@ there are 3 (red, green, and blue). 1 would represent grayscale.
 4. Classes: The number of classes we want to recognize. In this case, there are two
 (Picasso or van Gogh).
 
+On line 14, I construct the model using Sequential() from Keras, since I'm
+sequentially adding layers to the CNN.
+
+Line 15 initializes shape of the input using a channels last format,
+the default for Tensorflow.
+
+On lines 17 - 26, I add a CONV => RELU => POOL layer two times I'll
+refer to these as C,R,P layers.
+
+For the first C,R,P layer, the CONV layer will have 20 convolution filters. I then
+apply a ReLu function, followed by 2x2 max pooling in both the x and y directions
+with a stride of 2.
+
+For the next C,R,P layer, the CONV layer has 50 convolution filers. It's
+common to see the number of CONV filters increase the deeper we go into
+the network.
+
+Lines 28 - 38 make up the final block of code in this file.
+
+On line 29, I take the output of the preceding MaxPooling2D layer and
+flatten it into a single vector. This allows me to apply my dense/fully-connected layers.
+The fully-connected layers consist of 500 nodes (Line 30). On line 31, I
+pass this through a final ReLu activation function.
+
+On line 34, I define another fully-connected layer, with the number of nodes
+equal to the number of classes that I want to recognize. This dense layer is
+given to a softmax classifier, which will yield the probability of each class
+being outputted.
+
+Finally, Line 42 returns the fully constructed deep learning + Keras 
+image classifier to the calling function.
+ 
 <h3>train_network.py</h3>
 
 <h3>validate_network.py</h3>
