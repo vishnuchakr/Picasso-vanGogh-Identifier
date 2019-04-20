@@ -231,4 +231,8 @@ I'll choose to experiment with the batch size for this project, although I just 
 
 I have a hypothesis that my batch size is too small, resulting in those spikes in my validation loss. I'll test out some larger batch sizes and go from there. I'll be inputting my data into MS Excel to keep track of my results, with the inputs being the batch size and the outputs being the final value for validation loss. However, I will be keeping note of spikes that occur in the Loss/Accuracy plots. Ill try each input 3 times and average the outputs for each trial and use that as the actual output for that batch size value. Training each model takes only a few minutes, so I have the luxury of multiple trials for the experiment.
 
+![bs32](https://user-images.githubusercontent.com/42984263/56463539-087d7b00-639c-11e9-90c6-8c58d8f3fb86.PNG)
 
+For a batch size of 32, the graphs are spiky, and the final validation loss is 0.5427.
+
+I have a hypothesis that the batch size is too small, so I'll now try a batch size of 64.
