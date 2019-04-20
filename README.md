@@ -3,7 +3,9 @@ A CNN to classify a painting as created by either Picasso or Vincent van Gogh.
 
 Made with the Keras API using Tensorflow backend.
 <h3>image_classifier.py</h3>
+
 ![image_classifier](https://user-images.githubusercontent.com/42984263/56462413-630cdc00-6388-11e9-8b31-33e03c324bdb.PNG)
+
 This file will define my network architecture for the model. I'll 
 implement a LeNet Convolutional Neural Network, modeled by:
 
