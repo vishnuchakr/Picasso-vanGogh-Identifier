@@ -29,8 +29,6 @@ layer.
 
 5. Dense: A fully-connected layer.
 
-![image_classifier_imports](https://user-images.githubusercontent.com/42984263/56462462-0d84ff00-6389-11e9-94c3-4ce5b715c706.PNG)
-
 After the import statements, I will define the CNN class with a build
 method. I place the model in its own class for object decomposition purposes, and
 give it a static build method to construct the architecture on its own.
@@ -51,8 +49,6 @@ sequentially adding layers to the CNN.
 
 Line 15 initializes shape of the input using a channels last format,
 the default for Tensorflow.
-
-![image_classifier_declaration](https://user-images.githubusercontent.com/42984263/56462482-56d54e80-6389-11e9-9c93-1b404af62c26.PNG)
 
 On lines 17 - 26, I add a CONV => RELU => POOL layer two times I'll
 refer to these as C,R,P layers.
