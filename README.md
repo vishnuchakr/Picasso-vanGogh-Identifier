@@ -29,6 +29,8 @@ layer.
 
 5. Dense: A fully-connected layer.
 
+![imports](https://user-images.githubusercontent.com/42984263/56462512-eed33800-6389-11e9-86c7-6dfcd2b00ca3.PNG)
+
 After the import statements, I will define the CNN class with a build
 method. I place the model in its own class for object decomposition purposes, and
 give it a static build method to construct the architecture on its own.
@@ -50,6 +52,8 @@ sequentially adding layers to the CNN.
 Line 15 initializes shape of the input using a channels last format,
 the default for Tensorflow.
 
+![Declaration](https://user-images.githubusercontent.com/42984263/56462516-f98dcd00-6389-11e9-8f78-4f58759dc6b5.PNG)
+
 On lines 17 - 26, I add a CONV => RELU => POOL layer two times I'll
 refer to these as C,R,P layers.
 
@@ -60,6 +64,8 @@ with a stride of 2.
 For the next C,R,P layer, the CONV layer has 50 convolution filers. It's
 common to see the number of CONV filters increase the deeper we go into
 the network.
+
+![conv](https://user-images.githubusercontent.com/42984263/56462517-04e0f880-638a-11e9-8eba-c84bfba8ce2a.PNG)
 
 Lines 28 - 38 make up the final block of code in this file.
 
@@ -75,6 +81,8 @@ being outputted.
 
 Finally, Line 42 returns the fully constructed deep learning + Keras 
 image classifier to the calling function.
+ 
+ ![finalblock](https://user-images.githubusercontent.com/42984263/56462521-14f8d800-638a-11e9-8a36-3553f20b68ec.PNG)
  
 <h3>train_network.py</h3>
 This file will train the CNN to classify paintings as either created by
