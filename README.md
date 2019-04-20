@@ -225,4 +225,10 @@ Taking a look at the validation loss plot, I see a number of unusually large spi
 
 2. Spikes in validation loss can also be because of higher learning rates that are updating the model a bit too much after every pass. This is a problem with the **learning rate** hyperparameter being too large.
 
-I'll choose to experiment with the batch size for this project, although I just as easily could have adressed another hyperparameter.
+I'll choose to experiment with the batch size for this project, although I just as easily could have addressed another hyperparameter. I'll be using the method of hyperparameter tuning that I learned from Andrew Ng's Machine Learning course on Coursera, as described by this diagram:
+
+![Process](https://user-images.githubusercontent.com/42984263/56463406-51800000-6399-11e9-9157-583ade44ee7d.PNG)
+
+I have a hypothesis that my batch size is too small, resulting in those spikes in my validation loss. I'll test out some larger batch sizes and go from there. I'll be inputting my data into MS Excel to keep track of my results, with the inputs being the batch size and the outputs being the final value for validation loss. However, I will be keeping note of spikes that occur in the Loss/Accuracy plots. Ill try each input 3 times and average the outputs for each trial and use that as the actual output for that batch size value.
+
+
