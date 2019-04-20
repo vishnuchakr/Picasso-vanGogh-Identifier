@@ -123,7 +123,30 @@ From there I grab the paths to our input images followed by shuffling them (Line
 
 Now I'll pre-process the images.
 
-This loop loads and resizes each image to a fixed 28×28 pixels, and appends the image array to the data  list, followed by extracting the class label from the imagePath on .
+![preprocess](https://user-images.githubusercontent.com/42984263/56462740-001e4380-638e-11e9-88e3-ec36ca4591e8.PNG)
+
+This loop loads and resizes each image to a fixed 28×28 pixels, and appends the image array to the data  list, followed by extracting the class label from the imagePath. I'm able to extract the label this way because of the way I implemented the file structure for the images.
+
+Next, I'll scale images and create the training and testing splits:
+
+![partition_data](https://user-images.githubusercontent.com/42984263/56462769-70c56000-638e-11e9-9980-208d2dbd74e3.PNG)
+
+We further pre-process our input data by scaling the data points from [0, 255] (the minimum and maximum RGB values of the image) to the range [0, 1] on line 59.
+
+I then perform a training/testing split on the data using 75% of the images for training and 25% for testing (Lines 64 and 65). I also convert labels to vectors on lines 68-9.
+
+Subsequently, I'll perform some data augmentation, enabling me to generate “additional” training data by randomly transforming the input images using the parameters below:
+
+![imagedatagenerator](https://user-images.githubusercontent.com/42984263/56462873-1b8a4e00-6390-11e9-8595-28fd5c52bb08.PNG)
+
+Lines 72-4 create an image generator object which performs random rotations, shifts, flips, crops, and sheers on our image dataset. This should allow me to use a smaller dataset and still achieve high results.
+
+I can now move on to the actual training of the model.
+
+![train](https://user-images.githubusercontent.com/42984263/56462895-6dcb6f00-6390-11e9-8019-ff77730ee8da.PNG)
+
+
+
 
 <h3>validate_network.py</h3>
 
