@@ -9,7 +9,8 @@ implement a LeNet Convolutional Neural Network, modeled by:
 INPUT => (CONV => RELU => POOL) x 2 => FC => RELU => FC
 
 LeNet is a simple CNN architecture that is able to perform well on image
-datasets, so it is a good fit for a project of this scope. 
+datasets, so it is a good fit for a project of this scope. It is also easy
+to train a LeNet quickly without a powerful GPU, which I don't have quick access to.
 
 I'll be importing a number of packages from Keras:
 1. Conv2D: Performs convolution.
@@ -145,8 +146,21 @@ I can now move on to the actual training of the model.
 
 ![train](https://user-images.githubusercontent.com/42984263/56462895-6dcb6f00-6390-11e9-8019-ff77730ee8da.PNG)
 
+I build the CNN along with the Adam optimizer on Lines 78-81. Since this is a two-class classification problem, I'll use binary cross-entropy as the loss function.
 
+Training the network is initiated on Lines 83-7, where model.fit_generator is called , supplying the data augmentation object, training/testing data, and the number of epochs I want it to train for.
 
+Line 91 handles saving the model to disk so I can later use our image classification without having to retrain it.
+
+Finally, I plot the results and see how the deep learning image classifier performed:
+
+![plot](https://user-images.githubusercontent.com/42984263/56462977-8c7e3580-6391-11e9-9c03-dc894d4fc740.PNG)
+
+Using matplotlib, I build the plot and save the plot to disk using the --plot  command line argument which contains the path + filename.
+
+I can run the training file in command line with this command:
+
+![compile](https://user-images.githubusercontent.com/42984263/56463007-ff87ac00-6391-11e9-8eb5-2ff2a9c329e7.PNG)
 
 <h3>validate_network.py</h3>
 
