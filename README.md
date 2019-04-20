@@ -35,6 +35,8 @@ After the import statements, I will define the CNN class with a build
 method. I place the model in its own class for object decomposition purposes, and
 give it a static build method to construct the architecture on its own.
 
+![Declaration](https://user-images.githubusercontent.com/42984263/56462516-f98dcd00-6389-11e9-8f78-4f58759dc6b5.PNG)
+
 The build method takes in a number of parameters:
 1. Width: The width of the input images.
 
@@ -45,8 +47,6 @@ there are 3 (red, green, and blue). 1 would represent grayscale.
 
 4. Classes: The number of classes we want to recognize. In this case, there are two
 (Picasso or van Gogh).
-
-![Declaration](https://user-images.githubusercontent.com/42984263/56462516-f98dcd00-6389-11e9-8f78-4f58759dc6b5.PNG)
 
 On line 14, I construct the model using Sequential() from Keras, since I'm
 sequentially adding layers to the CNN.
