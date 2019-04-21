@@ -451,4 +451,4 @@ For a batch size of 48, the graphs were less spiky in general and the validation
 
 ![56plot](https://user-images.githubusercontent.com/42984263/56464398-10461b00-63ae-11e9-838a-76db70053017.PNG)
 
-For a batch size of 56, the graphs were still spiky, and the validation loss was still not much better. Of the values that I tried, a batch size of 64 looks to be the most optimal value. 
+For a batch size of 56, the graphs were still spiky, and the validation loss was still not much better. Of the values that I tried, a batch size of 64 looks to be the most optimal value that minimizes validation loss. All of the batch sizes resulted in similar accuracies, so I feel confident in saying that a batch size of 64 looks to be the best bet for this specific model.
