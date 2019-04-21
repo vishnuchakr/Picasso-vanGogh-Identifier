@@ -30,7 +30,15 @@ layer.
 
 5. Dense: A fully-connected layer.
 
-![imports](https://user-images.githubusercontent.com/42984263/56462512-eed33800-6389-11e9-86c7-6dfcd2b00ca3.PNG)
+```python
+#Import the required packages
+from keras.models import Sequential
+from keras.layers.convolutional import Conv2D
+from keras.layers.convolutional import MaxPooling2D
+from keras.layers.core import Activation
+from keras.layers.core import Flatten
+from keras.layers.core import Dense
+```
 
 After the import statements, I will define the CNN class with a build
 method. I place the model in its own class for object decomposition purposes, and
