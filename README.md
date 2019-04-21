@@ -235,16 +235,22 @@ I have a hypothesis that my batch size is too small, resulting in those spikes i
 
 For a batch size of 32, the graphs are spiky, and the final validation loss is 0.5427.
 
-I have a hypothesis that the batch size is too small, so I'll now try a batch size of 64.
+I have a hypothesis that the batch size is too small, so I'll now try a batch size of 32 x 2 = 64.
 
 ![bs64](https://user-images.githubusercontent.com/42984263/56463623-927a1380-639d-11e9-8d15-cf15e5a6ffb7.PNG)
 
 ![64plot](https://user-images.githubusercontent.com/42984263/56463636-bc333a80-639d-11e9-9565-72161a361bef.PNG)
 
-For a batch size of 64, the graphs are still spiky, maybe even more so. However, the final validation loss has decreased. I'll now try a batch size of 128.
+For a batch size of 64, the graphs are still spiky, maybe even more so. However, the final validation loss has decreased. I'll now try a batch size of 64 x 2 = 128.
 
 ![bs128](https://user-images.githubusercontent.com/42984263/56463740-68295580-639f-11e9-88a3-52ad8a96ad07.PNG)
 
 ![128plot](https://user-images.githubusercontent.com/42984263/56463736-56e04900-639f-11e9-9498-9ca9a73626ca.PNG)
 
-For a batch size of 128, the graphs are extremely spiky, and the final validation loss has increased very much so. I'll try a batch size thats smaller now, 48.
+For a batch size of 128, the graphs are extremely spiky, and the final validation loss has increased very much so. I'll try a batch size thats smaller now, (32 + 64) / 2 = 48.
+
+![bs48](https://user-images.githubusercontent.com/42984263/56463812-1c77ab80-63a1-11e9-99c4-1210d8e1aabc.PNG)
+
+![48plot](https://user-images.githubusercontent.com/42984263/56463805-f8b46580-63a0-11e9-83a7-67c429374793.PNG)
+
+For a batch size of 48, the graphs were less spiky in general and the validation loss was better than the initial one of batch size = 32. However, batch size = 64 still returns the lowest validation loss. Lastly, I'll try a validation loss (48 + 64) / 2 = 56.
