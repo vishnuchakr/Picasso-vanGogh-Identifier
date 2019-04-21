@@ -188,7 +188,7 @@ On Lines 31-33 I define the number of training epochs, initial learning rate, an
 #Initialize the number of epochs, initial learning rate, and batch size
 EPOCHS = 25
 INIT_LR = 1e-3
-BS = 56
+BS = 32
 
 #Initialize the data and labels
 print("loading images...")
@@ -317,19 +317,45 @@ From this plot, I can spot a few issues that might be present with the model. I'
 
 The next step is to evaluate the model on example images not part of the training/testing splits. I took an image off of Google Images for this purpose. I'll be using Picasso's "The Weeping Woman" for the example.
 
-![newimports](https://user-images.githubusercontent.com/42984263/56463125-cf410d00-6393-11e9-9819-91c05dc9ca30.PNG)
+```python
+#Import the required packages
+from keras.preprocessing.image import img_to_array
+from keras.models import load_model
+import numpy as np
+import argparse
+import imutils
+import cv2
+```
 
 On lines 2-7 I import the required packages. I can use Keras to load my trained model that's saved to disk.
 
 Next, I parse command line arguments:
 
-![argparser](https://user-images.githubusercontent.com/42984263/56463138-eaac1800-6393-11e9-9316-f5c4cc045cbb.PNG)
+```python
+#Construct the argument parser and give it the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-m", "--model", required=True,
+	help="path to trained model model")
+ap.add_argument("-i", "--image", required=True,
+	help="path to input image")
+args = vars(ap.parse_args())
+```
 
 The model requires the model and the image to be evaluated as parameters.
 
 Then I can load in an image and pre-process it:
 
-![loadimage](https://user-images.githubusercontent.com/42984263/56463157-14653f00-6394-11e9-907a-ce8cd7ea6868.PNG)
+```python
+#Load the image
+image = cv2.imread(args["image"])
+orig = image.copy()
+ 
+#Pre-process the image for classifying
+image = cv2.resize(image, (28, 28))
+image = image.astype("float") / 255.0
+image = img_to_array(image)
+image = np.expand_dims(image, axis=0)
+```
 
 The image is loaded and a copy is made on Lines 18 and 19. The copy allows us to later recall the original image and put our label on it. 
 
@@ -337,11 +363,32 @@ Lines 22-25 handles scaling the image to the range [0, 1], converting it to an a
 
 From there we’ll load the classifier model and make a prediction:
 
-![predict](https://user-images.githubusercontent.com/42984263/56463204-aff6af80-6394-11e9-8b26-3246baeea19a.PNG)
+```python
+#Load the trained CNN
+print("loading network...")
+model = load_model(args["model"])
+ 
+#Classify the input image
+(vanGogh, Picasso) = model.predict(image)[0]
+```
 
 Finally, I can use the prediction to draw on the original image copy and display it to the screen:
 
-![display](https://user-images.githubusercontent.com/42984263/56463207-e8968900-6394-11e9-8b25-7d5fc1d5f1dc.PNG)
+```python
+#Build the label
+label = "Picasso" if Picasso > vanGogh else "vanGogh"
+proba = Picasso if Picasso > vanGogh else vanGogh
+label = "{}: {:.2f}%".format(label, proba * 100)
+ 
+#Draw the label on the image
+output = imutils.resize(orig, width=400)
+cv2.putText(output, label, (10, 25),  cv2.FONT_HERSHEY_SIMPLEX,
+	0.7, (0, 255, 0), 2)
+ 
+#Show the output image
+cv2.imshow("Output", output)
+cv2.waitKey(0)
+```
 
 The label is built on line 35 and the corresponding probability value is chosen on line 36. 
 
