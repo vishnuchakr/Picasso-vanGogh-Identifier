@@ -128,7 +128,26 @@ image classifier to the calling function.
 This file will train the CNN to classify paintings as either created by
 Picasso or van Gogh.
 
-![imports](https://user-images.githubusercontent.com/42984263/56462612-d5cb8680-638b-11e9-92c6-52e1479c1963.PNG)
+```python
+#Use matplotlib to save figures in the background
+import matplotlib
+matplotlib.use("Agg")
+
+#Import the required packages
+from keras.preprocessing.image import ImageDataGenerator
+from keras.optimizers import Adam
+from sklearn.model_selection import train_test_split
+from keras.preprocessing.image import img_to_array
+from keras.utils import to_categorical
+from image_classifier import CNN
+from imutils import paths
+import matplotlib.pyplot as plt
+import numpy as np
+import argparse
+import random
+import cv2
+import os
+```
 
 On lines 1 - 18, I import the packages required for this file. These packages
 enable me to 
@@ -145,7 +164,17 @@ plot to disk in the background.
 
 From here, I define command line arguments to simplify compilation of the model.
 
-![argparse](https://user-images.githubusercontent.com/42984263/56462614-e0861b80-638b-11e9-81a8-6837bce3a372.PNG)
+```python
+#Construct the argument parser and parse the arguments
+ap = argparse.ArgumentParser()
+ap.add_argument("-d", "--dataset", required=True, 
+	help="path to input dataset")
+ap.add_argument("-m", "--model", required=True,
+	help="path to output model")
+ap.add_argument("-p", "--plot", type=str, default="56_1.png",
+	help="path to output accuracy/loss plot")
+args = vars(ap.parse_args())
+```
 
 Here I have two required command line arguments, --dataset  and --model , as well as an optional path to the accuracy/loss chart, --plot .
 
@@ -155,7 +184,22 @@ Next I set some training variables, initialize lists, and gather paths to images
 
 On Lines 31-33 I define the number of training epochs, initial learning rate, and batch size.
 
-![epoch_batch](https://user-images.githubusercontent.com/42984263/56462676-e8928b00-638c-11e9-84cf-520b234814fa.PNG)
+```python
+#Initialize the number of epochs, initial learning rate, and batch size
+EPOCHS = 25
+INIT_LR = 1e-3
+BS = 56
+
+#Initialize the data and labels
+print("loading images...")
+data = []
+labels = []
+
+#Obtain and randomly shuffle the image paths
+imagePaths = sorted(list(paths.list_images(args["dataset"])))
+random.seed(42)
+random.shuffle(imagePaths)
+```
 
 Then I initialize data and label lists (Lines 37 and 38). These lists will be responsible for storing the images loaded from disk along with their respective class labels.
 
@@ -163,13 +207,39 @@ From there I grab the paths to our input images followed by shuffling them (Line
 
 Now I'll pre-process the images.
 
-![preprocess](https://user-images.githubusercontent.com/42984263/56462740-001e4380-638e-11e9-88e3-ec36ca4591e8.PNG)
+```python
+#Loop over input images
+for imagePath in imagePaths:
+	#Load the image, pre-process it, and store it in the data list
+	image = cv2.imread(imagePath)
+	image = cv2.resize(image, (28, 28))
+	image = img_to_array(image)
+	data.append(image)
+
+	#Extract the class label from the path and update the labels list
+	label = imagePath.split(os.path.sep)[-2]
+	label = 1 if label == "Picasso" else 0
+	labels.append(label)
+```
 
 This loop loads and resizes each image to a fixed 28×28 pixels, and appends the image array to the data  list, followed by extracting the class label from the imagePath. I'm able to extract the label this way because of the way I implemented the file structure for the images.
 
 Next, I'll scale images and create the training and testing splits:
 
-![partition_data](https://user-images.githubusercontent.com/42984263/56462769-70c56000-638e-11e9-9980-208d2dbd74e3.PNG)
+```python
+#Scale the raw pixel intensities to the range [0, 1]
+data = np.array(data, dtype="float")/ 255.0
+labels = np.array(labels)
+
+#Partition the data into training and validation splits
+#75% of the data for training, 25% for testing
+(trainX, testX, trainY, testY) = train_test_split(data, 
+	labels, test_size=0.25, random_state=42)
+
+#Convert the labels from integers to vectors
+trainY = to_categorical(trainY, num_classes=2)
+testY = to_categorical(testY, num_classes=2)
+```
 
 We further pre-process our input data by scaling the data points from [0, 255] (the minimum and maximum RGB values of the image) to the range [0, 1] on line 59.
 
@@ -177,13 +247,35 @@ I then perform a training/testing split on the data using 75% of the images for 
 
 Subsequently, I'll perform some data augmentation, enabling me to generate “additional” training data by randomly transforming the input images using the parameters below:
 
-![imagedatagenerator](https://user-images.githubusercontent.com/42984263/56462873-1b8a4e00-6390-11e9-8595-28fd5c52bb08.PNG)
+```python
+#Construct the image generator for data augmentation
+aug = ImageDataGenerator(rotation_range=30, width_shift_range=0.1, 
+	height_shift_range=0.1, shear_range=0.2, zoom_range=0.2, 
+	horizontal_flip=True, fill_mode="nearest")
+```
 
 Lines 72-4 create an image generator object which performs random rotations, shifts, flips, crops, and sheers on our image dataset. This should allow me to use a smaller dataset and still achieve high results.
 
 I can now move on to the actual training of the model.
 
-![train](https://user-images.githubusercontent.com/42984263/56462895-6dcb6f00-6390-11e9-8019-ff77730ee8da.PNG)
+```python
+#Initialize the model
+print("Compiling model...")
+model = CNN.build(width=28, height=28, depth=3, classes=2)
+opt = Adam(lr=INIT_LR, decay=INIT_LR / EPOCHS)
+model.compile(loss="binary_crossentropy", optimizer=opt, 
+	metrics=["accuracy"])
+
+#Train the model
+print("Training network...")
+H = model.fit_generator(aug.flow(trainX, trainY, batch_size=BS),
+	validation_data=(testX, testY), steps_per_epoch=len(trainX) // BS,
+	epochs=EPOCHS, verbose=1)
+
+#Save the model to disk
+print("Saving model...")
+model.save(args["model"])
+```
 
 I build the CNN along with the Adam optimizer on Lines 78-81. Since this is a two-class classification problem, I'll use binary cross-entropy as the loss function.
 
@@ -193,7 +285,21 @@ Line 91 handles saving the model to disk so I can later use our image classifica
 
 Finally, I plot the results and see how the deep learning image classifier performed:
 
-![plot](https://user-images.githubusercontent.com/42984263/56462977-8c7e3580-6391-11e9-9c03-dc894d4fc740.PNG)
+```python
+# plot the training loss and accuracy
+plt.style.use("ggplot")
+plt.figure()
+N = EPOCHS
+plt.plot(np.arange(0, N), H.history["loss"], label="train_loss")
+plt.plot(np.arange(0, N), H.history["val_loss"], label="val_loss")
+plt.plot(np.arange(0, N), H.history["acc"], label="train_acc")
+plt.plot(np.arange(0, N), H.history["val_acc"], label="val_acc")
+plt.title("Training Loss and Accuracy on Picasso versus van Gogh")
+plt.xlabel("Epoch #")
+plt.ylabel("Loss/Accuracy")
+plt.legend(loc="lower left")
+plt.savefig(args["plot"])
+```
 
 Using matplotlib, I build the plot and save the plot to disk using the --plot  command line argument which contains the path + filename.
 
