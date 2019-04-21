@@ -408,7 +408,7 @@ Sure enough, the model is pretty confident that "The Weeping Woman" was created 
 
 <h3>Optimize a Hyperparameter</h3>
 
-This project uses a number of hyperparameters, any of which I could choose to work with. First, I'll analzye the loss function that the model generated earlier.
+This project uses a number of hyperparameters, any of which I could choose to work with. First, I'll analyze the loss function that the model generated earlier.
 
 ![lossspikes](https://user-images.githubusercontent.com/42984263/56463352-01ed0480-6398-11e9-837c-a38943be47fc.PNG)
 
