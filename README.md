@@ -44,7 +44,15 @@ After the import statements, I will define the CNN class with a build
 method. I place the model in its own class for object decomposition purposes, and
 give it a static build method to construct the architecture on its own.
 
-![Declaration](https://user-images.githubusercontent.com/42984263/56462516-f98dcd00-6389-11e9-8f78-4f58759dc6b5.PNG)
+```python
+class CNN:
+
+	@staticmethod
+	def build(width, height, depth, classes):
+		#Construct the model
+		model = Sequential()
+		inputShape = (height, width, depth)
+```
 
 The build method takes in a number of parameters:
 1. Width: The width of the input images.
@@ -66,7 +74,18 @@ the default for Tensorflow.
 On lines 17 - 26, I add a CONV => RELU => POOL layer two times I'll
 refer to these as C,R,P layers.
 
-![conv](https://user-images.githubusercontent.com/42984263/56462517-04e0f880-638a-11e9-8eba-c84bfba8ce2a.PNG)
+```python
+		#First set of CONV -> RELU -> POOL layers
+		model.add(Conv2D(20, (5, 5), padding="same",
+			input_shape = inputShape))
+		model.add(Activation("relu"))
+		model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+
+		#Second set of CONV -> RELU -> POOL layers
+		model.add(Conv2D(50, (5, 5), padding="same"))
+		model.add(Activation("relu"))
+		model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2)))
+```
 
 For the first C,R,P layer, the CONV layer will have 20 convolution filters. I then
 apply a ReLu function, followed by 2x2 max pooling in both the x and y directions
@@ -78,7 +97,19 @@ the network.
 
 Lines 28 - 38 make up the final block of code in this file.
 
-![finalblock](https://user-images.githubusercontent.com/42984263/56462521-14f8d800-638a-11e9-8a36-3553f20b68ec.PNG)
+```python
+		#Set of FC -> RELU layers
+		model.add(Flatten())
+		model.add(Dense(500))
+		model.add(Activation("relu"))
+
+		#Softmax classifier
+		model.add(Dense(classes))
+		model.add(Activation("softmax"))
+
+		#Return the constructed architecture
+		return model
+```
 
 On line 29, I take the output of the preceding MaxPooling2D layer and
 flatten it into a single vector. This allows me to apply my dense/fully-connected layers.
