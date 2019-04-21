@@ -259,4 +259,4 @@ For a batch size of 48, the graphs were less spiky in general and the validation
 
 ![56plot](https://user-images.githubusercontent.com/42984263/56464398-10461b00-63ae-11e9-838a-76db70053017.PNG)
 
-For a batch size of 56, the graphs were still spiky, and the validation loss was still not much better. Lastly, I'll try a validation loss of (56 + 64) / 2 = 
+For a batch size of 56, the graphs were still spiky, and the validation loss was still not much better.
